@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <meta charset = "utf-8">
+    <title>login Page</title>
+  </head>
+  <body>
+
+{% block content %}
+
+        <div id="a">
+            <div class="container">
+              <h1>Log in</h1>
+                <form action = "" method="POST">
+                    {% csrf_token %}
+                    <div><p style = "color: red">{{ error }}</p></div>
+                    <div class="form-group">
+                        <label for="username" class="bmd-label-floating"></label>
+                        <input type="text" class="form-control" placeholder="username" id="username" name="username" required><br/>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="bmd-label-floating"></label>
+                        <input type="password" class="form-control" placeholder="password" id="password" name="password" required><br/><br/>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-raised">
+                        Login
+                        <div class="ripple-container"></div>
+                    </button>
+                </form>
+            </div>
+
+  {% endblock %}
+   </body>
+</html>

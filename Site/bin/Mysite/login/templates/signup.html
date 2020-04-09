@@ -1,0 +1,43 @@
+<html>
+  <head>
+    <meta charset = "utf-8">
+    <title>sign_up Page</title>
+  </head>
+  <body>
+
+{% block content %}
+
+  <h1>Sign up</h1>
+  <form method = "post">
+
+    {% csrf_token %}
+
+      {% if form.username %}
+        {{ form.username.label_tag }}<br/>
+         <input type="text" name="username">
+         <small style="color: grey">{{ help_text }}</small><br/>
+          {% for error in form.username.errors %}
+            <p style = "color: red">{{ error }}</p>
+          {% endfor %}
+        {% endif %}
+        {% if form.password1 %}
+          {{ form.password1.label_tag }}<br/>
+          {{form.password1}}<br/>
+          {% for error in form.password1.errors %}
+            <p style = "color: red">{{ error }}</p>
+          {% endfor %}
+        {% endif %}
+        {% if form.password2 %}
+          {{ form.password2.label_tag }}<br/>
+          {{form.password2}}<br/>
+          {% for error in form.password2.errors %}
+            <p style = "color: red">{{ error }}</p>
+          {% endfor %}
+        {% endif %}<br/>
+    <button type = "submit">Sign up</button>
+  </form>
+
+{% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+<html>
+  <head>
+    <meta charset = "utf-8">
+    <title>Login Page</title>
+  </head>
+  <body>
+{% block content %}
+
+  {% if form.errors %}
+    <p> your username and password didn't match. Please try again.</p>
+  {% endif %}
+
+  {% if next %}
+    {% if user.is_authenticated %}
+      <p>your account doesn't have access to this page.
+         To proceed, Please login with an account that has access.</p>
+    {% else %}
+      <p>Please login to see this page.</p>
+    {% endif %}
+  {% endif %}
+
+<form method = "post" action = "http://127.0.0.1:8000/home/profile/">
+                  <h1>Login</h1>
+  {% csrf_token %}
+
+  <div>
+    <td>{{ form.username.label_tag }}</td>
+    <td>{{ form.username }}</td>
+  </div>
+
+   <div >
+     <td>{{ form.password.label_tag }}</td>
+     <td>{{ form.password }}</td>
+   </div>
+
+   <div>
+     <br/>
+     <input type = "submit" name = "Login" value = "Login" />
+     <input type = "hidden" name = "next" value = "{{next}}" />
+   </div>
+
+</form>
+
+<p><a href = "{% url 'password_reset' %}">forget password ?</a></p>
+
+{% endblock %}
+
+</body>
+</html>
