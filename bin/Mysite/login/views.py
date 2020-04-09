@@ -1,9 +1,8 @@
 from __future__ import unicode_literals
 from django.shortcuts import render, redirect
-from django.http import HttpResponse,Http404,JsonResponse
+from django.http import HttpResponse,JsonResponse
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 from . import models,forms
 
@@ -24,7 +23,12 @@ def SignupView(request):
             response = HttpResponse(request, 'login.html')
             response.set_cookie('username',request.user.username)
             db = models.Logindb.objects.all()
-            password = make_password(raw_password)
+            alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+            password = ''
+            for i in raw_password :
+                position = alphabet.find(i)
+                newposition = (position + 5) % 62
+                password += alphabet[newposition]
             db = models.Logindb.objects.create(username = user.username, password = password)
             db.save()
             login(request, user)
@@ -60,5 +64,11 @@ def UserView(request):
         list = []
         for l in models.Logindb.objects.all():
             list.append(l.username)
-            list.append(l.password)
+            alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+            password = ''
+            for i in l.password :
+                pos = alphabet.find(i)
+                newpos = (pos - 5) % 62
+                password += alphabet[newpos]
+            list.append(password)
         return JsonResponse(list ,safe = False)
