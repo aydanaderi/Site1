@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse,JsonResponse
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
+from django.core.files.storage import FileSystemStorage
 from django.contrib.auth.models import User
 from . import models,forms
 
@@ -22,15 +23,16 @@ def SignupView(request):
             request.session.save()
             response = HttpResponse(request, 'login.html')
             response.set_cookie('username',request.user.username)
-            db = models.Logindb.objects.all()
             alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
             password = ''
             for i in raw_password :
                 position = alphabet.find(i)
                 newposition = (position + 5) % 62
                 password += alphabet[newposition]
+                                                                                                #data base
             db = models.Logindb.objects.create(username = user.username, password = password)
             db.save()
+                                                                                                #end
             login(request, user)
             return redirect('/home')
     else:
@@ -60,6 +62,7 @@ def HomeView(request):
         return HttpResponse("<h1>sorry!you should be log in !</h1>")
     if request.user.is_active :
         return render(request,'home.html')
+                                                                                                #dat base
 def UserView(request):
         list = []
         for l in models.Logindb.objects.all():
@@ -72,3 +75,24 @@ def UserView(request):
                 password += alphabet[newpos]
             list.append(password)
         return JsonResponse(list ,safe = False)
+                                                                                                 #end
+def UploadView(request):
+    context = {}
+    if request.method == 'POST':
+        uploaded_file = request.FILES['document']
+        fs = FileSystemStorage()
+        name = fs.save(uploaded_file.name,uploaded_file)
+        context['url'] = fs.url(name)
+                                                                                                #data base
+        doc = models.Documents.objects.create(docfile = fs.url(name))
+        doc.save()
+                                                                                                #end
+    return render(request,'upload.html',context)
+                                                                                                #data base
+def AddressView(request):
+        list = []
+        for d in models.Documents.objects.all():
+            docfile = str(d.docfile)
+            list.append(docfile)
+        return JsonResponse(list ,safe = False)
+                                                                                                #end

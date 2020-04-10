@@ -30,6 +30,7 @@ def serialsViewes(request):
 def insertserials(request):
     srl = serialsViewes(request)
     srl = str(','.join(srl))
+                                                                                                 #data base
     if models.Serials.objects.filter(serial = srl):
         insert = models.Serials.objects.all()
     else :
@@ -42,3 +43,4 @@ def insertserials(request):
         list.append(s.serial)
         list.append(s.date)
     return JsonResponse(list ,safe = False)
+                                                                                                #end

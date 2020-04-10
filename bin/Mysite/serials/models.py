@@ -8,11 +8,3 @@ class Serials (models.Model):
     date = models.DateTimeField(auto_now_add = True)
     def __str__(self):
         return self.serial
-        
-    def serializeCustom(self):
-        data = {
-            "serial": self.serial,
-            "id": self.id,
-            "date": self.date,
-    }
-        return data
