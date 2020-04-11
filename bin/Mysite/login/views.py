@@ -61,8 +61,17 @@ def HomeView(request):
     if not request.user.is_active :
         return HttpResponse("<h1>sorry!you should be log in !</h1>")
     if request.user.is_active :
-        return render(request,'home.html')
-                                                                                                #dat base
+        context = {}
+        if request.method == 'POST':
+            uploaded_file = request.FILES['document']
+            fs = FileSystemStorage()
+            name = fs.save(uploaded_file.name,uploaded_file)
+            context['url'] = fs.url(name)                                                                                        #data base
+            im = models.Documents.objects.create(docfile = fs.url(name))
+            im.save()
+        context['username'] = request.user.username
+        return render(request,'home.html',context)
+
 def UserView(request):
         list = []
         for l in models.Logindb.objects.all():
@@ -75,20 +84,7 @@ def UserView(request):
                 password += alphabet[newpos]
             list.append(password)
         return JsonResponse(list ,safe = False)
-                                                                                                 #end
-def UploadView(request):
-    context = {}
-    if request.method == 'POST':
-        uploaded_file = request.FILES['document']
-        fs = FileSystemStorage()
-        name = fs.save(uploaded_file.name,uploaded_file)
-        context['url'] = fs.url(name)
-                                                                                                #data base
-        doc = models.Documents.objects.create(docfile = fs.url(name))
-        doc.save()
-                                                                                                #end
-    return render(request,'upload.html',context)
-                                                                                                #data base
+                                                                                                                                                                                                           #data base
 def AddressView(request):
         list = []
         for d in models.Documents.objects.all():

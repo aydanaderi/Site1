@@ -1,1 +1,26 @@
-<h1>Welcom! you logged in!</h1>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Upload Page</title>
+    </head>
+
+    <body>
+      {% block content %}
+      <h1>Welcom! you logged in!</h1>
+      <h2>username : {{ username }}</h2>
+        <form method="post" enctype = "multipart/form-data">
+
+          {% csrf_token %}
+          <h2>profile : </h2>
+            <input type = "file" name = "document"><br/>
+            <button type="submit">Upload profile</button>
+
+        </form>
+        {% if url %}
+        <img src = "{{ url }}" width = "300 px" height = "300 px"/>
+        {% endif %}
+      {% endblock %}
+    </body>
+
+</html>
