@@ -7,35 +7,56 @@
 
 {% block content %}
 
-  <h1>Sign up</h1>
+<center>
+    <center><h1>Sign up</h1></center>
+<table border = "5" cellspacing = "0" cellpadding = "10">
+
   <form method = "post">
 
     {% csrf_token %}
 
       {% if form.username %}
-        {{ form.username.label_tag }}<br/>
-         <input type="text" name="username">
-         <small style="color: grey">{{ help_text }}</small><br/>
+    <tr>
+      <td>
+        {{ form.username.label_tag }}<br/><br/>
+         <input type = "text" name = "username" placeholder = "{{ help_text }}">
+       </td>
+    </tr>
           {% for error in form.username.errors %}
             <p style = "color: red">{{ error }}</p>
           {% endfor %}
         {% endif %}
         {% if form.password1 %}
-          {{ form.password1.label_tag }}<br/>
+        <tr>
+          <td>
+          {{ form.password1.label_tag }}<br/><br/>
           {{form.password1}}<br/>
+        </td>
+      </tr>
           {% for error in form.password1.errors %}
             <p style = "color: red">{{ error }}</p>
           {% endfor %}
         {% endif %}
         {% if form.password2 %}
-          {{ form.password2.label_tag }}<br/>
+        <tr>
+          <td>
+          {{ form.password2.label_tag }}<br/><br/>
           {{form.password2}}<br/>
+        </td>
+      </tr>
           {% for error in form.password2.errors %}
             <p style = "color: red">{{ error }}</p>
           {% endfor %}
         {% endif %}<br/>
-    <button type = "submit">Sign up</button>
+        <tr>
+          <td>
+    <center><button type = "submit">Sign up</button></center>
+          </td>
+        </tr>
   </form>
+  cd
+</table>
+</center>
 
 {% endblock %}
 

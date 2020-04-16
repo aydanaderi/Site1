@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from . import models,forms
 
 def SignupView(request):
-    help_text = "please enter your phone number like 9--------- !"
+    help_text = "enter a phone number like 9---------"
     if request.method == 'POST':
         form = forms.SignUpForm(request.POST)
         if form.is_valid():

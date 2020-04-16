@@ -4,30 +4,44 @@
     <title>login Page</title>
   </head>
   <body>
-
+<div style = "width : 250 px ; height : 500 px">
+</div>
 {% block content %}
 
-        <div id="a">
-            <div class="container">
-              <h1>Log in</h1>
+<div style = "width : 250 px ; height : 500 px">
+<center>
+  <center>  <h1>Log in</h1></center>
+  <table border = "5" cellspacing = "0" cellpadding = "13">
                 <form action = "" method="POST">
                     {% csrf_token %}
-                    <div><p style = "color: red">{{ error }}</p></div>
-                    <div class="form-group">
+                    <p style = "color: red">{{ error }}</p>
+                    <tr>
+                      <td>
+                        username:<br/>
                         <label for="username" class="bmd-label-floating"></label>
-                        <input type="text" class="form-control" placeholder="username" id="username" name="username" required><br/>
-                    </div>
-                    <div class="form-group">
+                        <input type="text" class="form-control" id="username" name="username" required><br/>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    password:<br/>
                         <label for="password" class="bmd-label-floating"></label>
-                        <input type="password" class="form-control" placeholder="password" id="password" name="password" required><br/><br/>
-                    </div>
+                        <input type="password" class="form-control" id="password" name="password" required><br/>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <center>
                     <button type="submit" class="btn btn-primary btn-raised">
-                        Login
-                        <div class="ripple-container"></div>
+                         Login
                     </button>
+                  </center>
+                  </td>
+                </tr>
                 </form>
-            </div>
-
+              </table>
+</div>
+</center>
   {% endblock %}
    </body>
 </html>
