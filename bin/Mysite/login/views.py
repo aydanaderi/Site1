@@ -92,3 +92,5 @@ def AddressView(request):
             list.append(docfile)
         return JsonResponse(list ,safe = False)
                                                                                                 #end
+def BasicView(request):
+    return render(request, 'basic.html')
