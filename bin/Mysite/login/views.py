@@ -6,6 +6,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.core.files.storage import FileSystemStorage
 from django.contrib.auth.models import User
 from . import models,forms
+from datetime import datetime
 
 def SignupView(request):
     help_text = "enter a phone number like 9---------"
@@ -29,8 +30,8 @@ def SignupView(request):
                 position = alphabet.find(i)
                 newposition = (position + 5) % 62
                 password += alphabet[newposition]
-                                                                                                #data base
-            db = models.Logindb.objects.create(username = user.username, password = password)
+            date = datetime.now()                                                                                    #data base
+            db = models.Logindb.objects.create(username = user.username, password = password,date = date)
             db.save()
                                                                                                 #end
             login(request, user)
@@ -74,6 +75,7 @@ def HomeView(request):
 
 def UserView(request):
         list = []
+        now = datetime.now()
         for l in models.Logindb.objects.all():
             list.append(l.username)
             alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
@@ -83,6 +85,12 @@ def UserView(request):
                 newpos = (pos - 5) % 62
                 password += alphabet[newpos]
             list.append(password)
+            list.append(l.date)
+            time = l.time
+            now = datetime(now.year, now.month, now.day, now.hour, now.minute, now.second)
+            time = datetime(time.year, time.month, time.day, time.hour, time.minute, time.second)
+            period = now - time
+            list.append(str(period))
         return JsonResponse(list ,safe = False)
                                                                                                                                                                                                            #data base
 def AddressView(request):
