@@ -5,8 +5,10 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.core.files.storage import FileSystemStorage
 from django.contrib.auth.models import User
-from . import models,forms
+from django.core.mail import send_mail
+from django.conf import settings
 from datetime import datetime
+from . import models,forms
 
 def SignupView(request):
     help_text = "enter a phone number like 9---------"
@@ -17,8 +19,9 @@ def SignupView(request):
             user.refresh_from_db()
             user.username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
+            email = form.cleaned_data.get('email')
             user.save()
-            user = authenticate(username = user.username, password = raw_password)
+            user = authenticate(username = user.username, password = raw_password , email = 'email')
             request.session.set_expiry(0)
             request.session['username'] = request.user.username
             request.session.save()
@@ -31,9 +34,13 @@ def SignupView(request):
                 newposition = (position + 5) % 62
                 password += alphabet[newposition]
             date = datetime.now()                                                                                    #data base
-            db = models.Logindb.objects.create(username = user.username, password = password,date = date)
+            db = models.Information.objects.create(username = user.username, password = password,date = date,email = email)
             db.save()
-                                                                                                #end
+            subject = 'Signed up'
+            message = 'hello! welcom to our site. your sign up was successful'
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [email,]
+            send_mail( subject, message, email_from, recipient_list )                                                                        #end
             login(request, user)
             return redirect('/home')
     else:
@@ -67,16 +74,23 @@ def HomeView(request):
             uploaded_file = request.FILES['document']
             fs = FileSystemStorage()
             name = fs.save(uploaded_file.name,uploaded_file)
-            context['url'] = fs.url(name)                                                                                        #data base
-            im = models.Documents.objects.create(docfile = fs.url(name))
-            im.save()
+            context['url'] = fs.url(name)
+            inf = models.Information.objects.filter(username = request.user.username).update(profile = fs.url(name))                  #data base
         context['username'] = request.user.username
+        email = ""
+        for l in models.Information.objects.all():
+            username1 = str(l.username)
+            username2 = str(request.user.username)
+            if username1 == username2:
+                email = l.email
+                break
+        context['email'] = email
         return render(request,'home.html',context)
 
 def UserView(request):
         list = []
         now = datetime.now()
-        for l in models.Logindb.objects.all():
+        for l in models.Information.objects.all():
             list.append(l.username)
             alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
             password = ''
@@ -91,13 +105,9 @@ def UserView(request):
             time = datetime(time.year, time.month, time.day, time.hour, time.minute, time.second)
             period = now - time
             list.append(str(period))
-        return JsonResponse(list ,safe = False)
-                                                                                                                                                                                                           #data base
-def AddressView(request):
-        list = []
-        for d in models.Documents.objects.all():
-            docfile = str(d.docfile)
-            list.append(docfile)
+            list.append(l.email)
+            profile = str(l.profile)
+            list.append(profile)
         return JsonResponse(list ,safe = False)
                                                                                                 #end
 def BasicView(request):

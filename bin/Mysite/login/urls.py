@@ -7,6 +7,5 @@ urlpatterns = [
     url(r'^login/$', views.LoginView, name = 'LoginView'),
     url(r'^home/$', views.HomeView, name = 'HomeView'),
     url(r'^user/$', views.UserView, name = 'UserView'),
-    url(r'^address/$', views.AddressView, name = 'AddressView'),
     url(r'basic/$', views.BasicView, name = 'BasicView'),
 ]
