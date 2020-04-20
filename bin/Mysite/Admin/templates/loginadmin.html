@@ -1,7 +1,7 @@
 <html>
   <head>
     <meta charset = "utf-8">
-    <title>login Page</title>
+    <title>login admin Page</title>
   </head>
   <body>
 <div style = "width : 250 px ; height : 500 px">
@@ -10,29 +10,29 @@
 
 <div style = "width : 250 px ; height : 500 px">
 <center>
-  <center>  <h2>Log in</h2></center>
-  <table border = "5" cellspacing = "0" cellpadding = "13" style = "color: blue">
+  <center>  <h3>administration</h3></center>
+  <table border = "5" cellspacing = "0" cellpadding = "20" style = "color: Purple">
                 <form action = "" method="POST">
                     {% csrf_token %}
                     <p style = "color: red">{{ error }}</p>
                     <tr>
                       <td>
                         username:<br/>
-                        <label for="username" class="bmd-label-floating"></label>
-                        <input type="text" class="form-control" id="username" name="username" required><br/>
+                        <label for = "username" class = "bmd-label-floating"></label>
+                        <input type = "text" class = "form-control" id = "username" name = "username" required><br/>
                   </td>
                 </tr>
                 <tr>
                   <td>
                     password:<br/>
-                        <label for="password" class="bmd-label-floating"></label>
-                        <input type="password" class="form-control" id="password" name="password" required><br/>
+                        <label for = "password" class = "bmd-label-floating"></label>
+                        <input type = "password" class = "form-control" id = "password" name = "password" required><br/>
                   </td>
                 </tr>
                 <tr>
                   <td>
                     <center>
-                    <button type="submit" class="btn btn-primary btn-raised">
+                    <button type = "submit" class = "btn btn-primary btn-raised">
                          Login
                     </button>
                   </center>

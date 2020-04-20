@@ -22,6 +22,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^Serials/', include('serials.urls')),
     url(r'^', include('login.urls')),
+    url(r'^', include('Admin.urls')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)

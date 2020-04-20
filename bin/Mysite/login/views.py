@@ -10,6 +10,9 @@ from django.conf import settings
 from datetime import datetime
 from . import models,forms
 
+def BasicView(request):
+    return render(request, 'basic.html')
+
 def SignupView(request):
     help_text = "enter a phone number like 9---------"
     if request.method == 'POST':
@@ -33,14 +36,14 @@ def SignupView(request):
                 position = alphabet.find(i)
                 newposition = (position + 5) % 62
                 password += alphabet[newposition]
-            date = datetime.now()                                                                                    #data base
+            date = datetime.now()
             db = models.Information.objects.create(username = user.username, password = password,date = date,email = email)
             db.save()
             subject = 'Signed up'
             message = 'hello! welcom to our site. your sign up was successful'
             email_from = settings.EMAIL_HOST_USER
             recipient_list = [email,]
-            send_mail( subject, message, email_from, recipient_list )                                                                        #end
+            send_mail( subject, message, email_from, recipient_list )
             login(request, user)
             return redirect('/home')
     else:
@@ -70,12 +73,16 @@ def HomeView(request):
         return HttpResponse("<h1>sorry!you should be log in !</h1>")
     if request.user.is_active :
         context = {}
-        if request.method == 'POST':
-            uploaded_file = request.FILES['document']
-            fs = FileSystemStorage()
-            name = fs.save(uploaded_file.name,uploaded_file)
-            context['url'] = fs.url(name)
-            inf = models.Information.objects.filter(username = request.user.username).update(profile = fs.url(name))                  #data base
+        for l in models.Information.objects.all():
+            username1 = str(l.username)
+            username2 = str(request.user.username)
+            if username1 == username2:
+                if l.profile == "" :
+                    context['url'] = 'url'
+                    break
+                else :
+                    context['profile'] = l.profile
+                    break
         context['username'] = request.user.username
         email = ""
         for l in models.Information.objects.all():
@@ -87,6 +94,17 @@ def HomeView(request):
         context['email'] = email
         return render(request,'home.html',context)
 
+def UploadView(request):
+    context = {}
+    if request.method == 'POST':
+        print('hi')
+        uploaded_file = request.FILES['document']
+        fs = FileSystemStorage()
+        name = fs.save(uploaded_file.name,uploaded_file)
+        context['url'] = fs.url(name)
+        inf = models.Information.objects.filter(username = request.user.username).update(profile = fs.url(name))
+    return render(request,'upload.html',context)
+    
 def UserView(request):
         list = []
         now = datetime.now()
@@ -109,6 +127,3 @@ def UserView(request):
             profile = str(l.profile)
             list.append(profile)
         return JsonResponse(list ,safe = False)
-                                                                                                #end
-def BasicView(request):
-    return render(request, 'basic.html')

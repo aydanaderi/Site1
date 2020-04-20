@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'serials.apps.SerialsConfig',
     'login.apps.LoginConfig',
+    'Admin.apps.AdminConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
