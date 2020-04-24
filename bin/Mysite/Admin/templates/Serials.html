@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset = "utf-8">
+    <title>Serials Admin Page</title>
+  </head>
+  <body>
+
+    <h2>Serials</h2>
+    <table border = "5" cellspacing = "0" cellpadding = "10">
+      {% for i in srl %}
+      <tr>
+        <td>
+          serial :<br/>
+        </td>
+        <td>
+          {{ i.serial }}<br/><br/>
+        </td>
+      <tr>
+        <td>
+          id of serial :<br/>
+        </td>
+        <td>
+          {{ i.id }}<br/><br/>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          date of Serial registration :<br/>
+        </td>
+        <td>
+          {{ i.date }}<br/><br/>
+        </td>
+      </tr>
+      <tr>
+        <td>
+        <hr/>
+        </td>
+        <td>
+          <hr/>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+
+  </body>
+</html>

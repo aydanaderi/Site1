@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset = "utf-8">
+    <title>Users Admin Page</title>
+  </head>
+  <body>
+
+    <h2>Information of members</h2>
+    <table border = "5" cellspacing = "0" cellpadding = "10">
+      {% for i in info %}
+      <tr>
+        <td>
+          username :<br/>
+        </td>
+        <td>
+          {{ i.username }}<br/><br/>
+        </td>
+      <tr>
+        <td>
+          password :<br/>
+        </td>
+        <td>
+          {{ i.password }}<br/><br/>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          email :<br/>
+        </td>
+        <td>
+          {{ i.email }}<br/><br/>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          date of sign up :<br/>
+        </td>
+        <td>
+          {{ i.date }}<br/><br/>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          time of sign up :<br/>
+        </td>
+        <td>
+          {{ i.time }}<br/><br/>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          profile adress :<br/>
+        </td>
+        <td>
+          {{ i.profile }}<br/><br/><br/>
+        </td>
+      </tr>
+      <tr>
+        <td>
+        <hr/>
+        </td>
+        <td>
+          <hr/>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+
+  </body>
+</html>

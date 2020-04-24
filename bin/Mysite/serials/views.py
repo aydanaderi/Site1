@@ -11,10 +11,10 @@ def serialsViewes(request):
     year = datetime.now().year
     month = datetime.now().month
     year = year % 1000
-    year1 = str(year / 10)
-    year2 = str(year % 10)
+    year1 = str(int(year / 10))
+    year2 = str(int(year % 10))
     if month <= 9 :
-        month = str(month % 10)
+        month = str(int(month % 10))
     elif month == 10 :
         month = "A"
     elif month == 11 :
@@ -29,8 +29,7 @@ def serialsViewes(request):
 
 def insertserials(request):
     srl = serialsViewes(request)
-    srl = str(','.join(srl))
-                                                                                                 #data base
+    srl = str((b''.join(srl).decode()))
     if models.Serials.objects.filter(serial = srl):
         insert = models.Serials.objects.all()
     else :
@@ -43,4 +42,3 @@ def insertserials(request):
         list.append(s.serial)
         list.append(s.date)
     return JsonResponse(list ,safe = False)
-                                                                                                #end

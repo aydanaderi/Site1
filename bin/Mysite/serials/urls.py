@@ -3,5 +3,5 @@ from . import views
 
 app_name = 'serials'
 urlpatterns = [
-    url(r'^$', views.insertserials,name = 'insertserials'),
+    url(r'^serials/$', views.insertserials,name = 'insertserials'),
 ]

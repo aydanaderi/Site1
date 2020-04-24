@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset = "utf-8">
+    <title>Home Admin Page</title>
+  </head>
+  <body>
+    {% block content %}
+      <h1>Django administration</h1>
+      <h2>Site administration</h2><br/>
+
+      <table border = "5" cellspacing = "0" cellpadding = "10">
+        <tr>
+          <td>
+              <h3>Authentication and Authorization</h3>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <a href = "http://127.0.0.1:8000/Users">Users</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+              <h3>Login</h3>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <a href = "http://127.0.0.1:8000/Informations">informations</a>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+              <h3>SERIALS</h3>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <a href = "http://127.0.0.1:8000/Serials">Serials</a>
+          </td>
+        </tr>
+      </table>
+    {% endblock %}
+  </body>
+</html>

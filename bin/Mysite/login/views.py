@@ -104,7 +104,7 @@ def UploadView(request):
         context['url'] = fs.url(name)
         inf = models.Information.objects.filter(username = request.user.username).update(profile = fs.url(name))
     return render(request,'upload.html',context)
-    
+
 def UserView(request):
         list = []
         now = datetime.now()
@@ -118,7 +118,7 @@ def UserView(request):
                 password += alphabet[newpos]
             list.append(password)
             list.append(l.date)
-            time = l.time
+            time = l.date
             now = datetime(now.year, now.month, now.day, now.hour, now.minute, now.second)
             time = datetime(time.year, time.month, time.day, time.hour, time.minute, time.second)
             period = now - time
