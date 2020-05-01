@@ -97,7 +97,6 @@ def HomeView(request):
 def UploadView(request):
     context = {}
     if request.method == 'POST':
-        print('hi')
         uploaded_file = request.FILES['document']
         fs = FileSystemStorage()
         name = fs.save(uploaded_file.name,uploaded_file)
